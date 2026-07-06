@@ -1,6 +1,24 @@
 # Created by https://www.toptal.com/developers/gitignore/api/django,database
 # Edit at https://www.toptal.com/developers/gitignore?templates=django,database
 
+### VisualStudioCode ###
+.vscode/*
+.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+
 ### Database ###
 *.accdb
 *.db
@@ -10,6 +28,7 @@
 *.sqlite3
 *.db-shm
 *.db-wal
+*.sql
 
 ### Django ###
 *.log
