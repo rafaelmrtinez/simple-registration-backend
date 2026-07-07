@@ -1,6 +1,23 @@
 """This module contains serializers for the registration app."""
 from rest_framework import serializers
 from registration.models import UserProfile
+from registration.utils import encode_id
+
+
+class UserProfileListSerializer(serializers.Serializer):
+    """Read-only serializer for listing profiles with a derived id."""
+    id = serializers.SerializerMethodField()
+    username = serializers.CharField()
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+    date_of_birth = serializers.DateField()
+    mobile_number = serializers.CharField()
+    email = serializers.EmailField()
+    created_at = serializers.DateTimeField()
+    entered_by = serializers.CharField(source="entered_by_id")
+
+    def get_id(self, obj):
+        return encode_id(obj.id)
 
 
 class UserProfileSerializer(serializers.Serializer):
