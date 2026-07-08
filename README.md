@@ -2,15 +2,20 @@
 
 ## Table of Contents
 
-- [Introduction](#introduction)
-- [Project Structure](#project-structure)
-- [Module Overview](#module-overview)
-	- [Views](#views)
-	- [Models](#models)
-	- [Serializers](#serializers)
-	- [URLs](#urls)
-	- [Utils](#utils)
-- [Notes](#notes)
+- [simple-registration-backend](#simple-registration-backend)
+	- [Table of Contents](#table-of-contents)
+	- [Introduction](#introduction)
+	- [Project Structure](#project-structure)
+	- [Module Overview](#module-overview)
+		- [Views](#views)
+		- [Models](#models)
+		- [Serializers](#serializers)
+		- [URLs](#urls)
+		- [Utils](#utils)
+	- [Admin Site](#admin-site)
+	- [Dockerfile](#dockerfile)
+	- [Requirements](#requirements)
+	- [Notes](#notes)
 
 ## Introduction
 
@@ -84,6 +89,37 @@ Utility functions are defined in [registration/utils.py](registration/utils.py).
 - `decode_id(derived)` performs the reverse operation and returns the original integer primary key.
 
 These helpers are used to hide raw database IDs in API responses while still allowing search and lookup by derived identifier.
+
+## Admin Site
+
+The Django admin site is available through the project URL configuration in [myapp/urls.py](myapp/urls.py) at `/admin/`.
+
+The registration app exposes the [UserProfile](registration/models.py) model to the admin interface through [registration/admin.py](registration/admin.py), so profiles can be created, inspected, updated, and deleted from the admin UI.
+
+To use the admin site locally, create a superuser with `python manage.py createsuperuser`, start the application, and sign in at `/admin/`.
+
+## Dockerfile
+
+The [Dockerfile](Dockerfile) uses a two-stage build.
+
+- The builder stage starts from `python:3.11.15-trixie`, installs build dependencies, upgrades `pip`, and installs the Python packages into `/install`.
+- The runtime stage starts from `python:3.11.15-slim-trixie`, copies the installed packages from the builder image, and copies the application code into `/app`.
+- The container exposes port `8000` and starts the Django development server with `python manage.py runserver 0.0.0.0:8000`.
+
+This image is designed for local simulation and development-style container runs, not for production deployment.
+
+## Requirements
+
+The Python dependencies are pinned in [requirements.txt](requirements.txt) to keep local and container installs consistent.
+
+- `Django` provides the web framework and admin site.
+- `djangorestframework` powers the API views and serializers.
+- `django-filter` supports filtering patterns for API/query handling.
+- `psycopg2-binary` provides PostgreSQL connectivity for the configured database backend.
+- `python-dotenv` loads environment variables from a local `.env` file.
+- `asgiref`, `sqlparse`, and `Markdown` are supporting dependencies used by Django and Django REST Framework.
+
+If you add or upgrade packages, update [requirements.txt](requirements.txt) so the Docker image and local environment stay aligned.
 
 ## Notes
 
