@@ -83,5 +83,5 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: .
-          push: true
+          push: ${{ github.event_name == 'push' }}
           tags: ${{ vars.DOCKERHUB_USERNAME }}/app:${{ env.SHORT_SHA }}
