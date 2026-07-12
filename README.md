@@ -1,8 +1,8 @@
-# simple-registration-backend
+# Simple Registration Backend
 
 ## Table of Contents
 
-- [simple-registration-backend](#simple-registration-backend)
+- [Simple Registration Backend](#simple-registration-backend)
 	- [Table of Contents](#table-of-contents)
 	- [Introduction](#introduction)
 	- [Project Structure](#project-structure)
